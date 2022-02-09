@@ -61,7 +61,48 @@
 
 // TODO Votre code ici.
 
+$server = 'localhost';
+$user = 'root';
+$pass = '';
+$db = 'new_table';
+
 try {
-    ...
+    $maConnexion = new PDO("mysql:host=$server;dbname=$db;charset=utf8", $user, $pass);
+    $maConnexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+    $request = "
+        CREATE TABLE user (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            fname VARCHAR(100) NOT NULL,
+            address VARCHAR(200) NOT NULL,
+            postal_code VARCHAR(200) NOT NULL,
+            country VARCHAR(100) NOT NULL,
+            mail VARCHAR(100) NOT NULL,
+            date_join DATETIME DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(mail) 
+        )";
+
+    $requestTwo = "
+        CREATE TABLE products (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(100) NOT NULL,
+            price INT UNSIGNED,
+            short_descritpion VARCHAR(200) NOT NULL,
+            long_description TEXT NOT NULL
+        )
+    ";
+
+    $maConnexion->exec($request);
+    $maConnexion->exec($requestTwo);
+
+
+
+    echo "<p>La base de données user et products créé.</p>";
 }
-catch...
+catch (PDOException $exception) {
+    echo $exception->getMessage();
+}
+
+$maConnexion = null;
