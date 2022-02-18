@@ -64,7 +64,7 @@
 $server = 'localhost';
 $user = 'root';
 $pass = '';
-$db = 'new_table';
+$db = 'table_test-php';
 
 try {
     $maConnexion = new PDO("mysql:host=$server;dbname=$db;charset=utf8", $user, $pass);
